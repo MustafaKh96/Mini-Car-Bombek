@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Car Bombek</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1e3a8a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0 7px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .logo {
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .phone-group {
+            display: flex;
+            gap: 8px;
+        }
+        .contact-info a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 10px;
+            background-color: #3b82f6;
+            border-radius: 15px;
+            font-size: 14px;
+            transition: background 0.3s;
+            margin-bottom: 5px;
+        }
+        .contact-info a:hover {
+            background-color: #2563eb;
+        }
+        .container {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards;
+            width: 90%;
+            max-width: 600px;
+            margin-top: 140px;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .text-container {
+            text-align: center;
+            font-family: 'Arial';
+            font-weight: bold;
+            color: #2575fc;
+            margin-bottom: 15px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ccc;
+        }
+        .tabs a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        .tabs a:hover, .tabs a.active {
+            color: #2575fc;
+            border-bottom: 2px solid #2575fc;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .contact-form h2 {
+            text-align: center;
+        }
+        .contact-form .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-top: 17px;
+        }
+        .contact-form .form-group input,
+        .contact-form .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-top: 4px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; 
+            gap: 10px;
+            margin-top: 7px;
+        }
+        .email-btn {
+            background: #2575fc;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .whatsapp-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+            background: rgb(3, 152, 3);
+            color: white;
+        }
+        .contact-info-section {
+            margin-top: 20px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .about-section{
+            margin-top: 20px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 10px;
+            text-align: left;
+        }
+        @media (max-width: 600px) {
+            .phone-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .contact-info a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function openTab(tabName) {
+                document.querySelectorAll(".tab-content").forEach(tab => {
+                    tab.style.display = "none";
+                });
+                document.getElementById(tabName).style.display = "block";
+
+                document.querySelectorAll(".tab-link").forEach(tab => {
+                    tab.classList.remove("active");
+                });
+                document.querySelector(`[data-tab='${tabName}']`).classList.add("active");
+            }
+
+            function addTabEventListener(elementId, tabName) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.addEventListener("click", function () { openTab(tabName); });
+                    element.addEventListener("touchstart", function () { openTab(tabName); });
+                }
+            }
+
+            addTabEventListener("kontakt-tab", "contact");
+            addTabEventListener("ueber-uns-tab", "about");
+
+            openTab("contact");
+        });
+
+        function sendEmail() {
+            let name = document.getElementById("name").value;
+            let phone = document.getElementById("phone").value; // Telefonnummer abrufen
+            let message = document.getElementById("message").value;
+            let email = "kirsten.bombek@freenet.de";
+
+            let subject = encodeURIComponent("Nachricht von " + name);
+            let body = encodeURIComponent(`Name: ${name}\nTelefon: ${phone}\n\nNachricht:\n${message}`);
+
+            let mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+        }
+
+        function sendWhatsApp() {
+            let name = document.getElementById("name").value;
+            let phone = document.getElementById("phone").value;
+            let message = document.getElementById("message").value;
+            let phoneNumber = "+491708349008";
+
+            let whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Name: " + name + "\nTelefonnummer: " + phone + "\nNachricht: " + message)}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="contact-info">
+            <div class="phone-group">
+                <a href="tel:06449719425"><i class="fas fa-phone"></i> 06449-719425</a>
+                <a href="tel:01708349008"><i class="fas fa-mobile-alt"></i> 0170-8349008</a>
+            </div>
+            <a href="mailto:kirsten.bombek@freenet.de"><i class="fas fa-envelope"></i>kirsten.bombek@freenet.de</a>
+        </div>
+        <img src="logo.png" alt="Taxi Logo" class="logo">
+    </div>
+    <div class="container">
+        <div class="text-container">
+            <h1>Mini Car Bombek</h1>
+        </div>
+
+        <!-- Tabs für die Navigation -->
+        <div class="tabs">
+            <a href="javascript:void(0)" id="kontakt-tab" data-tab="contact" class="tab-link active">Kontakt</a>
+            <a href="javascript:void(0)" id="ueber-uns-tab" data-tab="about" class="tab-link">Über uns</a>
+        </div>
+
+        <!-- Kontaktformular -->
+        <div id="contact" class="tab-content active">
+            <div class="contact-form">
+                <h2>Kontaktformular</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefonnummer</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea id="message" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group button-container">
+                        <button class="email-btn" onclick="sendEmail()">E-Mail senden</button>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp()">WhatsApp senden</button>
+                    </div>
+                </form>
+            </div>
+            <div class="contact-info-section">
+                <h3>📞 Kontakt & Buchung</h3>
+                <p>📍 Kirchstraße 15, 35630 Ehringshausen</p>
+                <p><strong>Telefon:</strong> <a href="tel:06449719425">06449 719425</a> oder <a href="tel:01708349008">0170 8349008</a></p>
+                <p><strong>E-Mail:</strong> <a href="mailto:kirsten.bombek@freenet.de">kirsten.bombek@freenet.de</a></p>
+                <p><strong>Öffnungszeiten:</strong> Montag bis Freitag von 07:00 bis 19:00 Uhr, am Wochenende und abends nach Vereinbarung.</p>
+            </div>                     
+        </div>
+        
+        <!-- Über uns Abschnitt -->
+        <div id="about" class="tab-content">
+            <div class="about-section">
+                <h2>🚖 Mini-Car Bombek</h2>
+                <p>Seit über 23 Jahren Ihr zuverlässiger Partner in Ehringshausen-Katzenfurt.</p>
+                
+                <h3>🌟 Unsere Leistung:</h3>
+
+                <p>🩺 <strong>Krankenfahrten (sitzend):</strong> Ob Bestrahlung, Chemotherapie, Kur oder Reha – wir bringen Sie sicher ans Ziel und rechnen direkt mit allen gesetzlichen Krankenkassen ab.</p>
+                <p>✈️ <strong>Flughafentransfer:</strong> Pünktliche Abholung von Zuhause zu allen deutschen Flughäfen – und natürlich auch wieder zurück. Damit Sie Ihre Reise sorgenfrei genießen können.</p>
+                <p>📦 <strong>Kurierfahrten:</strong> Wenn es schnell gehen muss! Wir liefern eilige Sendungen zuverlässig und direkt an den Bestimmungsort.</p>
+                <p>🎒 <strong>Schülerfahrten:</strong> Wir bringen Ihr Kind sicher zur Schule oder zu anderen Einrichtungen.</p>
+                <p>🚗 <strong>Mietwagenservice:</strong> Neutrale Mietwagen für Geschäftsfahrten, inklusive Abholung von Geschäftskunden.</p>
+                <p>🚌 <strong>Gruppen- und Vereinsfahrten:</strong> Komfortable Fahrten für bis zu 8 Personen, egal ob für Ausflüge, Clubtouren oder Hochzeiten.</p>
+                
+                <p>Zusätzlich bieten wir viele weitere Fahrdienstleistungen an.</p>
+            </div>
+            
+            <div class="about-section">
+                <h3>📄 Impressum</h3>
+                <p><strong>Steuernummer:</strong> 03980731021</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
